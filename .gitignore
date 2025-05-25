@@ -1,0 +1,61 @@
+# IDEs and editors
+.project
+.classpath
+.settings/
+.idea/
+*.iml
+.java-version
+.c9/
+*.launch
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Maven
+target/
+
+# Generated files
+generated/
+
+# Application specific
+.lucene/
+baleen-spring-server
+
+# Angular/Frontend
+src/main/frontend/node_modules/
+src/main/frontend/node/
+src/main/frontend/.angular/
+src/main/frontend/dist/
+src/main/frontend/tmp/
+src/main/frontend/out-tsc/
+src/main/frontend/bazel-out/
+src/main/frontend/.sass-cache/
+src/main/frontend/connect.lock
+src/main/frontend/coverage/
+src/main/frontend/libpeerconnection.log
+src/main/frontend/testem.log
+src/main/frontend/typings/
+
+# Angular build output
+src/main/resources/static/*
+!src/main/resources/static/.gitkeep
+
+# Logs
+*.log
+npm-debug.log
+yarn-error.log
+
+# Temp files
+*.tmp
+*.temp
+*~
+
+# System files
+.DS_Store
+Thumbs.db

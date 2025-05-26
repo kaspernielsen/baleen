@@ -81,7 +81,7 @@ public final class SecomServiceRegistryService {
                 .orElse(List.of()).stream().max(Comparator.comparing(SearchObjectResult::getVersion))
                 .orElseThrow(() -> new SecomNotFoundException(String.format("The MRN %s was not registered as a service with %s", mrn, serviceRegistryClient)));
 
-        logger.info("Resolving MRN as: {}", result.getEndpointUri());
+        logger.info("Resolved MRN as: {}", result.getEndpointUri());
 
         // We got a result from the service registry. Create and return a SecomClients
         try {

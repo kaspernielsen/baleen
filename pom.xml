@@ -103,6 +103,14 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webflux</artifactId>
         </dependency>
@@ -156,8 +164,8 @@
                 <version>1.15.0</version>
                 <configuration>
                     <workingDirectory>src/main/frontend</workingDirectory>
-                    <nodeVersion>v20.11.0</nodeVersion>
-                    <npmVersion>10.2.4</npmVersion>
+                    <nodeVersion>v22.16.0</nodeVersion>
+                    <npmVersion>10.9.0</npmVersion>
                 </configuration>
                 <executions>
                     <execution>

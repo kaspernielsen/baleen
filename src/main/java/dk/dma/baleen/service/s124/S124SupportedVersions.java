@@ -25,8 +25,7 @@ import dk.dma.baleen.service.spi.S100SupportedServiceVersions;
  * The actual supported versions via SECOM and Upload might differ at some point in the future.
  */
 public enum S124SupportedVersions implements S100SupportedServiceVersions {
-    @Deprecated
-    V1_0_0("0.0.1", "1.0.0"), V2_0_0("0.0.1", "2.0.0"); /* , V1_5_0("1.5.0"); */
+    V2_0_0("0.0.1", "2.0.0"); /* , V1_5_0("1.5.0"); */
 
     private final String serviceVersion;
 

@@ -17,6 +17,8 @@ package dk.dma.baleen.secom.serviceold;
 
 import org.grad.secom.core.models.SubscriptionNotificationObject;
 import org.grad.secom.core.models.UploadObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,9 @@ import dk.dma.baleen.secom.util.BaleenSecomClient;
 @Service
 class SecomOutboxService {
 
+
+    private static final Logger logger = LoggerFactory.getLogger(SecomOutboxService.class);
+
     @Autowired
     SecomServiceRegistryService serviceRegistry;
 
@@ -42,17 +47,16 @@ class SecomOutboxService {
         SUBSCRIPTION_NOTIFICATION {
             @Override
             protected void sendTo(Object o, BaleenSecomClient service) {
-                System.out.println("Sending totificateion");
+                logger.info("Sending subscription notitification to " + service.uri());
                 service.subscriptionNotification((SubscriptionNotificationObject) o);
-                System.out.println("Sending totificateion Done");
             }
         },
         UPLOAD {
             @Override
             protected void sendTo(Object o, BaleenSecomClient service) {
-                System.out.println("Uploading to " + service.uri());
+                logger.info("Uploading to " + service.uri());
                 service.upload((UploadObject) o);
-                System.out.println("Uploading completed");
+                logger.info("Uploading completed to " + service.uri());
             }
         };
 

@@ -39,6 +39,13 @@ import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
             </a>
           </li>
         </ul>
+        
+        <div class="sidebar-footer">
+          <button class="logout-btn" (click)="logout()">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Logout</span>
+          </button>
+        </div>
       </nav>
       
       <div class="main-content">
@@ -58,6 +65,8 @@ import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
       background-color: #2c3e50;
       color: white;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
     }
     
     .sidebar-header {
@@ -116,6 +125,37 @@ import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
       overflow-y: auto;
       padding: 2rem;
     }
+    
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 0.875rem 0;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    
+    .logout-btn:hover {
+      color: #e74c3c;
+      background-color: rgba(231, 76, 60, 0.1);
+      border-radius: 4px;
+    }
   `]
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+  logout() {
+    // Redirect to Spring Security logout endpoint
+    window.location.href = '/logout';
+  }
+}

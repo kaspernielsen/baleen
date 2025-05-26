@@ -24,25 +24,13 @@ public class SubscriberController {
     @Autowired
     private SecomSubscriberRepository subscriberRepository;
 
-    @GetMapping("/test")
-    public String test() {
-        return "Subscribers API is working!";
-    }
-
     @GetMapping
     @Transactional(readOnly = true)
     public List<SubscriberDto> getAllSubscribers() {
         try {
-            log.info("Fetching all subscribers");
+            log.debug("Fetching all subscribers");
             List<SecomSubscriberEntity> subscribers = subscriberRepository.findAll();
-            log.info("Found {} subscribers", subscribers.size());
-            
-            // If no subscribers exist, return empty list
-            if (subscribers.isEmpty()) {
-                log.info("No subscribers found in database");
-                return new java.util.ArrayList<>();
-            }
-            
+            log.debug("Found {} subscribers", subscribers.size());
             return subscribers.stream()
                     .map(this::convertToDto)
                     .collect(Collectors.toList());
@@ -63,7 +51,7 @@ public class SubscriberController {
             } catch (Exception e) {
                 log.warn("Could not load node for subscriber {}: {}", entity.getId(), e.getMessage());
             }
-            
+
             return new SubscriberDto(
                 entity.getId(),
                 entity.getDataProductType() != null ? entity.getDataProductType().toString() : null,
@@ -83,11 +71,11 @@ public class SubscriberController {
 
     @DeleteMapping
     @Transactional
-    public void clearAllSubscribers() {
+    public void removeAllSubscribers() {
         try {
-            log.info("Clearing all subscribers");
+            log.info("Remove all subscribers");
             subscriberRepository.deleteAll();
-            log.info("All subscribers have been cleared");
+            log.info("All subscribers have been removed");
         } catch (Exception e) {
             log.error("Error clearing subscribers", e);
             throw e;

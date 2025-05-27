@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -25,12 +24,6 @@ import { environment } from '../../environments/environment';
         </ul>
       </div>
       
-      <div class="card card-padded">
-        <h3>API Test</h3>
-        <button class="btn-primary" (click)="testApi()">Test Backend API</button>
-        <p *ngIf="apiResponse" class="api-response mt-2">{{ apiResponse }}</p>
-      </div>
-      
       <footer class="page-footer">
         <p>Built on {{ buildDate | date:'medium' }}</p>
       </footer>
@@ -51,13 +44,6 @@ import { environment } from '../../environments/environment';
       border-bottom: none;
     }
     
-    .api-response {
-      padding: 1rem;
-      background-color: #e8f5e9;
-      border-radius: 4px;
-      color: #2e7d32;
-    }
-    
     .page-footer {
       margin-top: 3rem;
       padding-top: 2rem;
@@ -69,24 +55,11 @@ import { environment } from '../../environments/environment';
   `]
 })
 export class HomeComponent implements OnInit {
-  apiResponse: string = '';
   buildDate = new Date(environment.buildTimestamp);
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   ngOnInit() {
     console.log('Home component initialized');
-  }
-
-  testApi() {
-    this.http.get('/api/hello', { responseType: 'text' })
-      .subscribe({
-        next: (response) => {
-          this.apiResponse = response;
-        },
-        error: (error) => {
-          this.apiResponse = 'Error connecting to API: ' + error.message;
-        }
-      });
   }
 }

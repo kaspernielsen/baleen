@@ -32,7 +32,7 @@ import jakarta.persistence.Lob;
 public class PublicationEntity {
 
     @Lob
-    @Column(nullable = false, columnDefinition = "BINARY")
+    @Column(nullable = false)
     private byte[] envelopeUploadObject; // The actual data to be published
 
     @Id

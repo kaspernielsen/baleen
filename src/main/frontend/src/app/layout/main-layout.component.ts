@@ -38,6 +38,12 @@ import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
               <span class="nav-text">Logging</span>
             </a>
           </li>
+          <li>
+            <a routerLink="/about" routerLinkActive="active">
+              <span class="nav-icon">ℹ️</span>
+              <span class="nav-text">About</span>
+            </a>
+          </li>
         </ul>
         
         <div class="sidebar-footer">
@@ -156,6 +162,7 @@ import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
 export class MainLayoutComponent {
   logout() {
     // Redirect to Spring Security logout endpoint
+    // This will do nothing when security is disabled locally
     window.location.href = '/logout';
   }
 }

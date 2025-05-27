@@ -36,7 +36,7 @@ public class SecomTransactionalUploadLinkEntity extends SecomTransactionalEntity
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(length = Integer.MAX_VALUE, columnDefinition = "BINARY")
+    @Column(length = Integer.MAX_VALUE)
     private byte[] data;
 
     @Column

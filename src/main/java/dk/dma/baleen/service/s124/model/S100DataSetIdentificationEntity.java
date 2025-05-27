@@ -1,7 +1,6 @@
 package dk.dma.baleen.service.s124.model;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class S100DataSetIdentificationEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long id;
 
     @Column(nullable = false)
     private String encodingSpecification;
@@ -62,11 +61,11 @@ public class S100DataSetIdentificationEntity implements Serializable {
     private List<String> topicCategories = new ArrayList<>();
 
     // Getters and Setters
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

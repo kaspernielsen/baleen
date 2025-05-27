@@ -13,12 +13,12 @@ COPY --chown=spring:spring /src/main/resources/secom/truststore.p12 /app/trustst
 # Switch to non-root user
 USER spring:spring
 
-# Environment variables for Docker profile (SSL disabled for now)
-ENV JAVA_OPTS="" \
-    SPRING_PROFILES_ACTIVE=docker
+# Environment variables - profile will be set at runtime
+ENV JAVA_OPTS="-Xmx1g -Xms512m -XX:+UseG1GC"
+ENV SPRING_PROFILES_ACTIVE=docker
 
-# Expose HTTP port
-EXPOSE 8080
+# Expose HTTP and HTTPS ports
+EXPOSE 8080 8443
 
-# Start the application
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+# Start the application with error output
+ENTRYPOINT ["sh", "-c", "echo 'Starting Baleen application...' && java $JAVA_OPTS -jar app.jar || (echo 'Application failed to start' && exit 1)"]

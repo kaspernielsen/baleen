@@ -99,3 +99,53 @@ The project is a single Spring Boot application containing:
 - Test data located in `src/test/resources/datasets/`
 - Spring Boot Test with `@SpringBootTest` annotation
 - AssertJ for assertions
+
+## Deployment to Azure
+
+### Prerequisites
+- Azure CLI installed and logged in (`az login`)
+- Access to Azure Container Registry (`az acr login --name sfs0cr`)
+- Database password stored in environment variable
+
+### Deploy to Azure Container Instances
+```bash
+# Set database password (required)
+export DATABASE_PASSWORD="your-password-here"
+
+# Deploy (builds, pushes to ACR, and updates container)
+./build-and-upload.sh
+
+# Force recreate container (useful for environment variable changes)
+./build-and-upload.sh --recreate
+```
+
+### Check Deployment Status
+```bash
+# View container logs
+az container logs --resource-group sfs-enav-dev-rg --name baleen-test-server
+
+# Check container status
+az container show --resource-group sfs-enav-dev-rg --name baleen-test-server --query instanceView.state
+
+# Access the application
+# URL: http://baleen-test-server.northeurope.azurecontainer.io:8080
+```
+
+### Environment Variables
+The deployment sets the following environment variables:
+- `SPRING_PROFILES_ACTIVE=azure` - Activates Azure-specific configuration
+- `SERVER_PORT=8080` - Application port
+- `DATABASE_PASSWORD` - PostgreSQL password (from your environment)
+- `DDL_AUTO=update` - Hibernate DDL mode (optional, defaults to update)
+
+### Database Configuration
+- Azure PostgreSQL with PostGIS extension
+- Connection details in `application-azure.properties`
+- Hibernate 6.x auto-detects PostgreSQL dialect
+- Tables are created automatically on first run
+
+### Troubleshooting Deployment
+1. **Database connection issues**: Ensure DATABASE_PASSWORD is set correctly
+2. **Container fails to start**: Check logs with `az container logs`
+3. **Hibernate dialect errors**: The application uses Hibernate 6.x which auto-detects dialects
+4. **PostGIS not available**: Enable PostGIS extension on Azure PostgreSQL instance

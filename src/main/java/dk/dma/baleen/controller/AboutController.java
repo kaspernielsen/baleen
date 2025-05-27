@@ -27,7 +27,7 @@ public class AboutController {
     @Value("${spring.datasource.username}")
     private String databaseUsername;
 
-    @Value("${spring.datasource.driver-class-name}")
+    @Value("${spring.datasource.driver-class-name:}")
     private String driverClassName;
 
     @Autowired

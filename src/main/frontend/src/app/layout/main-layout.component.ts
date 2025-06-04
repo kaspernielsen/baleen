@@ -27,6 +27,12 @@ import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
             </a>
           </li>
           <li>
+            <a routerLink="/s124-datasets" routerLinkActive="active">
+              <span class="nav-icon">📊</span>
+              <span class="nav-text">S-124 Datasets</span>
+            </a>
+          </li>
+          <li>
             <a routerLink="/niord" routerLinkActive="active">
               <span class="nav-icon">🌊</span>
               <span class="nav-text">Niord</span>

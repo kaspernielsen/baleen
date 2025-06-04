@@ -14,6 +14,10 @@ export interface S124Dataset {
   referencedDatasetIds: number[];
 }
 
+export interface S124DatasetDetail extends S124Dataset {
+  gml: string;
+}
+
 export interface Page<T> {
   content: T[];
   totalElements: number;
@@ -46,7 +50,26 @@ export class S124DatasetService {
     return this.http.get<S124Dataset>(`${this.apiUrl}/${id}`);
   }
 
+  getDatasetDetails(id: number): Observable<S124DatasetDetail> {
+    return this.http.get<S124DatasetDetail>(`${this.apiUrl}/${id}/details`);
+  }
+
   getDatasetCount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count`);
+  }
+
+  getNiordStatus(): Observable<{ configured: boolean }> {
+    return this.http.get<{ configured: boolean }>(`${this.apiUrl}/niord-status`);
+  }
+
+  clearAllDatasets(): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/clear`);
+  }
+
+  reloadFromNiord(): Observable<{ success: boolean; datasetsLoaded: number; message: string }> {
+    return this.http.post<{ success: boolean; datasetsLoaded: number; message: string }>(
+      `${this.apiUrl}/reload-from-niord`, 
+      {}
+    );
   }
 }

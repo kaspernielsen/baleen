@@ -37,8 +37,45 @@ public class S124DatasetReader {
     public static String toMRN(MessageSeriesIdentifierType identifier) {
         StringBuilder b = new StringBuilder();
         b.append("urn:mrn:dk:baleen:s-124");
+        
+        // Log what we're getting
+        System.out.println("DEBUG: Creating MRN from identifier: " + identifier);
+        if (identifier != null) {
+            System.out.println("  Agency: " + identifier.getAgencyResponsibleForProduction());
+            System.out.println("  Country: " + identifier.getCountryName());
+            System.out.println("  WarningNumber: " + identifier.getWarningNumber());
+            System.out.println("  Year: " + identifier.getYear());
+            System.out.println("  WarningType: " + identifier.getWarningType());
+        }
+        
+        // Add agency
+        if (identifier.getAgencyResponsibleForProduction() != null && !identifier.getAgencyResponsibleForProduction().isEmpty()) {
+            b.append(":").append(identifier.getAgencyResponsibleForProduction().toLowerCase());
+        }
+        
+        // Add country
+        if (identifier.getCountryName() != null && !identifier.getCountryName().isEmpty()) {
+            b.append(":").append(identifier.getCountryName().toLowerCase());
+        }
+        
+        // Add year and warning number
+        b.append(":").append(identifier.getYear());
+        b.append(":").append(identifier.getWarningNumber());
+        
+        // Add warning type if present
+        if (identifier.getWarningType() != null) {
+            // Use the code if available, otherwise use the value
+            if (identifier.getWarningType().getCode() != null) {
+                b.append(":").append(identifier.getWarningType().getCode());
+            } else if (identifier.getWarningType().getValue() != null) {
+                b.append(":").append(identifier.getWarningType().getValue());
+            }
+        }
 
-        return b.toString();
+        String result = b.toString();
+        System.out.println("  Generated MRN: " + result);
+        
+        return result;
     }
 
     private static <T extends AbstractGMLType> List<T> findAll(Class<T> gmlType, Dataset ds) {

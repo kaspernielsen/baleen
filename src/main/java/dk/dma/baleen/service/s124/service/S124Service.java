@@ -142,8 +142,6 @@ public class S124Service extends S100DataProductService {
 
         Dataset dataset = S124Utils.unmarshallS124(gml);
 
-        UUID uuid = MRNToUUID.createUUIDFromMRN(dataset.getId());
-
         // TODO check for existing
 
         // TODO we should have some kind of
@@ -153,7 +151,6 @@ public class S124Service extends S100DataProductService {
         // Set basic properties
         //entity.setDataProductVersion(d.dataProductVersion());
         entity.setDataProductVersion("1.0.0");
-        entity.setUuid(uuid); // Generate new UUID for this instance
 
         // Convert geometries.
         Geometry geometry = S124DatasetReader.calculateGeometry(dataset);
@@ -166,8 +163,13 @@ public class S124Service extends S100DataProductService {
         NavwarnPreamble preamble = S124DatasetReader.findPreamble(dataset);
 
         String mrn = S124DatasetReader.toMRN(preamble.getMessageSeriesIdentifier());
-
         entity.setMrn(mrn);
+        
+        // Generate UUID from MRN instead of dataset ID to ensure uniqueness
+        System.out.println("DEBUG: Dataset ID: " + dataset.getId());
+        System.out.println("DEBUG: Using MRN for UUID: " + mrn);
+        UUID uuid = MRNToUUID.createUUIDFromMRN(mrn);
+        entity.setUuid(uuid);
 
         OffsetDateTime pd = preamble.getPublicationTime();
         if (pd != null) {
@@ -189,7 +191,7 @@ public class S124Service extends S100DataProductService {
         }
 
         // Save the entity
-  //      repository.save(entity);
+        repository.save(entity);
 
         subscriberService.publish(SECOM_DataProductType.S124, "1.0.0", uuid, geometry, new TransmissibleDatasetGenerator() {
 

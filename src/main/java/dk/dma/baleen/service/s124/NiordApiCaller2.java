@@ -20,8 +20,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.baleen.s100.xmlbindings.s124.v1_0_0.utils.S124Utils;
 import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.Dataset;
 import jakarta.xml.bind.JAXBException;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * This is temporary hack to get all messages in Niord. Even though that hasn't been promulgated
@@ -50,21 +49,20 @@ public class NiordApiCaller2 {
 
     private final HttpClient client;
     private final ObjectMapper objectMapper;
+    
+    @Value("${niord.endpoint:}")
+    private String niordEndpoint;
 
     public NiordApiCaller2() {
         this.client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NORMAL).build();
         this.objectMapper = new ObjectMapper();
     }
-
-    public static void main(String[] args) throws Exception {
-        NiordApiCaller2 caller = new NiordApiCaller2();
-        List<Result> fetchAll = caller.fetchAll();
-//        for (Result r : fetchAll) {
-//            System.out.println();
-//            System.out.println(r.xml);
-//        }
-        System.out.println("Got " + fetchAll.size());
+    
+    public boolean isNiordEndpointConfigured() {
+        return niordEndpoint != null && !niordEndpoint.trim().isEmpty();
     }
+
+    // Removed main method - not needed in production
 
     @Scheduled(fixedRate = 60000) // Run every minute (60000 milliseconds)
     public void fetchData() {
@@ -89,14 +87,14 @@ public class NiordApiCaller2 {
         return c;
     }
 
-    public List<Result> fetchAlXl() throws IOException, InterruptedException, JAXBException {
-        String datasetString = Files.readString(Paths.get("/Users/kaspernielsen/dma/madame/documents/124CCCC00000001_240424.gml"));
-        Dataset dm = S124Utils.unmarshallS124(datasetString);
-        return List.of(new Result(datasetString, dm));
-    }
 
     public List<Result> fetchAll() throws IOException, InterruptedException, JAXBException {
-        String endpoint = "https://niord.t-dma.dk";
+        if (!isNiordEndpointConfigured()) {
+            logger.warn("Niord endpoint not configured");
+            return new ArrayList<>();
+        }
+        
+        String endpoint = niordEndpoint;
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(endpoint + "/rest/public/v1/messages")).GET().build();
 

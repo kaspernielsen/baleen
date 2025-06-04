@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  buildTimestamp: '2025-06-04T10:17:11.537Z' // This will be replaced at build time
+  buildTimestamp: '2025-06-04T10:35:55.371Z' // This will be replaced at build time
 };

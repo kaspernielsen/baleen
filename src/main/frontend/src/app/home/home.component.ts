@@ -15,13 +15,6 @@ import { environment } from '../../environments/environment';
       
       <div class="card card-padded">
         <h2>Platform Overview</h2>
-        <p>A specialized platform for managing S-124 Navigational Warnings, providing:</p>
-        <ul class="feature-list">
-          <li>Real-time navigational warning distribution</li>
-          <li>SECOM protocol support for secure data exchange</li>
-          <li>Integration with Niord system</li>
-          <li>Subscriber management and notifications</li>
-        </ul>
       </div>
       
       <footer class="page-footer">

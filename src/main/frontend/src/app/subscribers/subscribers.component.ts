@@ -173,7 +173,7 @@ export class SubscribersComponent implements OnInit {
   }
 
   isActive(subscriber: Subscriber): boolean {
-    if (!subscriber.subscriptionEnd) return false;
+    if (!subscriber.subscriptionEnd) return true;
     const endDate = new Date(subscriber.subscriptionEnd);
     return endDate > new Date();
   }

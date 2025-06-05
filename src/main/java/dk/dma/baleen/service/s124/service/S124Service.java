@@ -36,9 +36,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import dk.baleen.s100.xmlbindings.s124.v1_0_0.utils.S124Utils;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.Dataset;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.MessageSeriesIdentifierType;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.NavwarnPreamble;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.Dataset;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.MessageSeriesIdentifierType;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.NavwarnPreamble;
 import dk.dma.baleen.secom.serviceold.SecomSubscriberService;
 import dk.dma.baleen.secom.serviceold.TransmissibleDatasetGenerator;
 import dk.dma.baleen.secom.util.MRNToUUID;
@@ -142,6 +142,10 @@ public class S124Service extends S100DataProductService {
 
         Dataset dataset = S124Utils.unmarshallS124(gml);
 
+        // Debug: Log the incoming XML to see the structure
+        System.out.println("DEBUG: Incoming XML (first 2000 chars):");
+        System.out.println(gml.length() > 2000 ? gml.substring(0, 2000) + "..." : gml);
+        
         // TODO check for existing
 
         // TODO we should have some kind of
@@ -161,6 +165,19 @@ public class S124Service extends S100DataProductService {
 
         // Set validity
         NavwarnPreamble preamble = S124DatasetReader.findPreamble(dataset);
+        
+        // Debug: Log preamble details
+        System.out.println("DEBUG: Preamble found: " + preamble);
+        if (preamble != null && preamble.getMessageSeriesIdentifier() != null) {
+            MessageSeriesIdentifierType identifier = preamble.getMessageSeriesIdentifier();
+            System.out.println("DEBUG: MessageSeriesIdentifier details:");
+            System.out.println("  - Agency: " + identifier.getAgencyResponsibleForProduction());
+            System.out.println("  - Country: " + identifier.getCountryName());
+            System.out.println("  - WarningNumber: " + identifier.getWarningNumber());
+            System.out.println("  - Year: " + identifier.getYear());
+            System.out.println("  - WarningIdentifier: '" + identifier.getWarningIdentifier() + "'");
+            System.out.println("  - NameOfSeries: " + identifier.getNameOfSeries());
+        }
 
         String mrn = S124DatasetReader.toMRN(preamble.getMessageSeriesIdentifier());
         entity.setMrn(mrn);

@@ -53,6 +53,10 @@
             <url>https://rnavlab.gla-rad.org/mvn/repository/grad/</url>
         </repository>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -80,9 +84,9 @@
         
         <!-- S-100 XML Bindings -->
         <dependency>
-            <groupId>dma.dk.baleen.s100.xml-bindings</groupId>
-            <artifactId>s124-2_0_1-xml-bindings</artifactId>
-            <version>1.0-SNAPSHOT</version>
+      <groupId>com.github.NiordOrg.niord-s124-xml-bindings</groupId>
+      <artifactId>s124-2_0_1-xml-bindings</artifactId>
+      <version>v0.0.5</version>
         </dependency>
 
         <!-- Spring Boot -->

@@ -20,14 +20,14 @@ import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
 
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.S100SpatialAttributeType;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.profiles._5_0.AbstractGMLType;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.Dataset;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.MessageSeriesIdentifierType;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.NavwarnAreaAffected;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.NavwarnPart;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.NavwarnPreamble;
-import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.References;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.S100SpatialAttributeType;
+import dk.dma.niord.s100.xmlbindings.s100.gml.profiles._5_0.AbstractGMLType;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.Dataset;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.MessageSeriesIdentifierType;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.NavwarnAreaAffected;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.NavwarnPart;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.NavwarnPreamble;
+import dk.dma.niord.s100.xmlbindings.s124.v2_0_0.References;
 
 /**
  *
@@ -35,6 +35,25 @@ import dk.dma.baleen.s100.xmlbindings.s124.v2_0_0.References;
 public class S124DatasetReader {
 
     public static String toMRN(MessageSeriesIdentifierType identifier) {
+        // Add detailed logging for debugging
+        System.out.println("DEBUG: toMRN called with identifier: " + identifier);
+        System.out.println("DEBUG: identifier.getWarningIdentifier(): " + identifier.getWarningIdentifier());
+        System.out.println("DEBUG: warningIdentifier is null: " + (identifier.getWarningIdentifier() == null));
+        if (identifier.getWarningIdentifier() != null) {
+            System.out.println("DEBUG: warningIdentifier length: " + identifier.getWarningIdentifier().length());
+            System.out.println("DEBUG: warningIdentifier after trim: '" + identifier.getWarningIdentifier().trim() + "'");
+            System.out.println("DEBUG: warningIdentifier is empty after trim: " + identifier.getWarningIdentifier().trim().isEmpty());
+        }
+        
+        // First check if warningIdentifier is available and use it directly
+        if (identifier.getWarningIdentifier() != null && !identifier.getWarningIdentifier().trim().isEmpty()) {
+            String warningIdentifier = identifier.getWarningIdentifier().trim();
+            System.out.println("DEBUG: Using warningIdentifier as MRN: " + warningIdentifier);
+            return warningIdentifier;
+        }
+        
+        // Fallback to constructing MRN from other fields
+        System.out.println("DEBUG: warningIdentifier not available, constructing MRN from other fields");
         StringBuilder b = new StringBuilder();
         b.append("urn:mrn:dk:baleen:s-124");
         

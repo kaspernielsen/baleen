@@ -15,17 +15,17 @@
  */
 package dk.dma.baleen.service.s124.util;
 
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.*;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.CurveType;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.PointType;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.SurfaceType;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.impl.*;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.impl.CurveTypeImpl;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.impl.PointTypeImpl;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.base._5_0.impl.SurfaceTypeImpl;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.profiles._5_0.*;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.profiles._5_0.ObjectFactory;
-import dk.dma.baleen.s100.xmlbindings.s100.gml.profiles._5_0.impl.*;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.*;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.CurveType;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.PointType;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.SurfaceType;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.impl.*;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.impl.CurveTypeImpl;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.impl.PointTypeImpl;
+import dk.dma.niord.s100.xmlbindings.s100.gml.base._5_0.impl.SurfaceTypeImpl;
+import dk.dma.niord.s100.xmlbindings.s100.gml.profiles._5_0.*;
+import dk.dma.niord.s100.xmlbindings.s100.gml.profiles._5_0.ObjectFactory;
+import dk.dma.niord.s100.xmlbindings.s100.gml.profiles._5_0.impl.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
